@@ -20,6 +20,9 @@
   "license": "Unlicense",
   "ignore": [
     "**/.*",
+    "demo",
+    "*.sln",
+    "*.csproj",
     "node_modules",
     "bower_components",
     "test",
