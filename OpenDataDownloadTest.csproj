@@ -38,10 +38,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="bower_components\es6-promise-polyfill\promise.js" />
+    <Content Include="bower_components\es6-promise-polyfill\promise.min.js" />
+    <Content Include="demo\index.css" />
     <Content Include="demo\index.html" />
     <Content Include="demo\index.js" />
     <Content Include="OpenData.js" />
     <Content Include="OpenDataWorker.js" />
+    <Content Include="bower.json" />
     <None Include="UNLICENSE" />
   </ItemGroup>
   <ItemGroup>

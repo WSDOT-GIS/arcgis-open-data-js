@@ -1,5 +1,6 @@
 ﻿/*global self, OpenData*/
-self.importScripts("../OpenData.js");
+self.importScripts("bower_components/es6-promise-polyfill/promise.min.js");
+self.importScripts("OpenData.js");
 
 var openData;
 

@@ -1,0 +1,31 @@
+{
+  "name": "arcgis-open-data",
+  "version": "1.0.0",
+  "homepage": "https://github.com/WSDOT-GIS/arcgis-open-data-js",
+  "authors": [
+    "WSDOT"
+  ],
+  "description": "Library for accessing ArcGIS Open Data",
+  "main": "OpenData.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "arcgis",
+    "open",
+    "data"
+  ],
+  "license": "Unlicense",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "es6-promise-polyfill": "~1.0.0"
+  }
+}
