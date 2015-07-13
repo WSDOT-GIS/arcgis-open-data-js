@@ -8,6 +8,10 @@
 	function getShapefileZip() {
 		worker.postMessage(this.dataset.itemId + ".zip");
 		this.classList.add("busy");
+		var statusSpan = this.nextSibling;
+		["fa", "fa-cog", "fa-spin"].forEach(function (cls) {
+			statusSpan.classList.add(cls);
+		}); 
 		return false;
 	}
 
@@ -16,11 +20,14 @@
 		var a = document.createElement("a");
 		a.href = [qsParameters.url, "datasets", item.id].join("/") + ".zip";
 		a.textContent = item.item_name;
-		a.target = "_blank";
+		a.target = "OpenDataShapefile";
 		a.dataset.itemId = item.id;
 		a.dataset.ext = ".zip";
 		a.onclick = getShapefileZip;
 		li.appendChild(a);
+		var span = document.createElement("span");
+		span.setAttribute("class", "status-icon");
+		li.appendChild(span);
 		return li;
 	}
 
@@ -60,15 +67,22 @@
 		// Load data
 		worker = new Worker("../OpenDataWorker.js");
 		worker.addEventListener("message", function (e) {
-			var message, a;
+			var message, a, statusSpan;
 			if (e.data.message) {
 				message = e.data.message;
 				if (message === "download complete") {
-					window.open(e.data.url, "OpenDataShapefile");
+					////window.open(e.data.url, "OpenDataShapefile");
 					a = document.body.querySelector("[data-item-id='" + e.data.id + "']");
+					statusSpan = a.nextSibling;
+					["fa-cog", "fa-spin"].forEach(function (cls) {
+						statusSpan.classList.remove(cls);
+					});
+					statusSpan.classList.add("fa-check");
 					a.classList.add("complete");
 					a.classList.remove("busy");
 					a.onclick = null;
+					a.href = e.data.url;
+					a.click();
 				} else if (message === "data loaded") {
 					document.body.removeChild(progressBar);
 					document.body.appendChild(createList(e.data.data));
