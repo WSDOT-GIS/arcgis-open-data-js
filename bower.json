@@ -29,6 +29,7 @@
     "tests"
   ],
   "dependencies": {
-    "es6-promise-polyfill": "~1.0.0"
+    "es6-promise-polyfill": "~1.0.0",
+    "font-awesome": "~4.3.0"
   }
 }

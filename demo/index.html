@@ -1,17 +1,17 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <title>ArcGIS Open Data</title>
+    <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="index.css" rel="stylesheet" />
 </head>
 <body>
     <form action="">
         <label for="urlBox">Open Data URL</label>
-        <input id="urlBox" name="url" type="url" autocomplete="on" list="urls" />
+        <input id="urlBox" name="url" type="url" autocomplete="on" list="urls" required="required" />
         <button type="submit">Go</button>
     </form>
-    <p><a href="https://github.com/WSDOT-GIS/arcgis-open-data-js" target="github">Source on GitHub</a></p>
+    <p><a href="https://github.com/WSDOT-GIS/arcgis-open-data-js" target="github"><span class="fa fa-github"></span> Source on GitHub</a></p>
     <datalist id="urls">
         <option value="http://geo.wa.gov" />
         <option value="http://data.wsdot.opendata.arcgis.com" />
