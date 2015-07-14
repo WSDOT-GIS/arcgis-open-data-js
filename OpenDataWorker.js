@@ -18,7 +18,7 @@ function requestData(id, ext) {
 		} else if (this.status === 200) {
 			result = JSON.parse(this.response);
 			self.postMessage({
-				message: "download complete",
+				type: "download complete",
 				id: id,
 				url: result.url.replace(/\?$/,"")
 			});
@@ -32,6 +32,7 @@ self.addEventListener("message", function (message) {
 	var urlRe = /(https?\:)?\/\//;
 	var idRe = /^([0-9a-f]+_[0-9a-f])(?:\.(\w+))?$/i;
 	var match;
+	var searchParams;
 	if (typeof message.data === "string") {
 		match = message.data.match(idRe);
 		if (match) {
@@ -44,15 +45,30 @@ self.addEventListener("message", function (message) {
 				sort_by: "name"
 			}).then(function (dataItems) {
 				self.postMessage({
-					message: "data loaded",
+					type: "data loaded",
 					data: dataItems
 				});
 			}, function (error) {
 				self.postMessage({
-					message: "load all data error",
+					type: "load all data error",
 					error: error
 				});
 			});
 		}
+	} else if (typeof message.data === "object") {
+		searchParams = message.data;
+		openData.getDataPage(searchParams).then(function (searchResults) {
+			self.postMessage({
+				type: "search page",
+				searchParams: searchParams,
+				results: searchResults
+			});
+		}, function (error) {
+			self.postMessage({
+				type: "search page error",
+				searchParams: searchParams,
+				error: error
+			});
+		});
 	}
 });

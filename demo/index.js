@@ -1,5 +1,7 @@
 ﻿(function () {
-	var worker;
+	var worker, list;
+
+	list = document.getElementById("itemList");
 
 	/**
 	 * @param {Event} e
@@ -32,11 +34,11 @@
 	}
 
 	function createList(items) {
-		var ul = document.createElement("ul");
+		var frag = document.createDocumentFragment();
 		items.forEach(function (item) {
-			ul.appendChild(createListItem(item));
+			frag.appendChild(createListItem(item));
 		});
-		return ul;
+		return frag;
 	}
 
 	function getQSParameters() {
@@ -67,10 +69,16 @@
 		// Load data
 		worker = new Worker("../OpenDataWorker.js");
 		worker.addEventListener("message", function (e) {
-			var message, a, statusSpan;
-			if (e.data.message) {
-				message = e.data.message;
-				if (message === "download complete") {
+			console.debug("message received", e);
+			var a, statusSpan;
+			if (e.data.type) {
+				if (e.data.type === "search page" && e.data.results) {
+					if (progressBar) {
+						document.body.removeChild(progressBar);
+					}
+
+					list.appendChild(createList(e.data.results.data));
+				} else if (e.data.type === "download complete") {
 					////window.open(e.data.url, "OpenDataShapefile");
 					a = document.body.querySelector("[data-item-id='" + e.data.id + "']");
 					statusSpan = a.nextSibling;
@@ -83,14 +91,14 @@
 					a.onclick = null;
 					a.href = e.data.url;
 					a.click();
-				} else if (message === "data loaded") {
-					document.body.removeChild(progressBar);
-					document.body.appendChild(createList(e.data.data));
 				}
 			}
 		});
 		worker.postMessage(qsParameters.url);
-		worker.postMessage("load all data");
+		worker.postMessage({
+			per_page: 20,
+			bbox: "-116.91,45.54,-124.79,49.05"
+		});
 	}
 
 
