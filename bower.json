@@ -26,7 +26,8 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "*.config"
   ],
   "dependencies": {
     "es6-promise-polyfill": "~1.0.0",
