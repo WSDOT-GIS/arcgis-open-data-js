@@ -1,3 +1,22 @@
 ﻿.fa-check {
     color: darkgreen;
 }
+
+a.busy {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+a.busy:after, a.complete:after {
+    text-decoration: none;
+    font-style: italic;
+}
+
+a.busy:after {
+    content: ' (Please wait...)';
+
+}
+
+a.complete:after {
+    content: ' Processing Complete';
+}
