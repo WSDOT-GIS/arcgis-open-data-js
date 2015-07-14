@@ -47,6 +47,7 @@
     <Content Include="demo\index.html" />
     <Content Include="demo\index.js" />
     <Content Include="OpenData.js" />
+    <Content Include="OpenDataObjects.js" />
     <Content Include="OpenDataWorker.js" />
     <Content Include="bower.json" />
     <Content Include="README.markdown" />
@@ -57,6 +58,13 @@
     <Content Include="bower_components\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="bower_components\font-awesome\fonts\FontAwesome.otf" />
     <None Include="UNLICENSE" />
+    <Content Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

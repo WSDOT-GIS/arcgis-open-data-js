@@ -1,22 +1,24 @@
-﻿/*global module, define*/
+﻿/*global module, define, require*/
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd) {
 		// AMD. Register as an anonymous module.
-		define([], factory);
+		define(["./OpenDataObjects"], factory);
 	} else if (typeof exports === 'object') {
 		// Node. Does not work with strict CommonJS, but
 		// only CommonJS-like environments that support module.exports,
 		// like Node.
-		module.exports = factory();
+		module.exports = factory(require("OpenDataObjects"));
 	} else {
 		// Browser globals (root is window)
-		root.OpenData = factory();
+		root.OpenData = factory(root.OpenDataObjects);
 	}
-}(this, function () {
+}(this, function (OpenDataObjects) {
 	/**
 	 * OpenData module
 	 * @module OpenData
 	 */
+
+
 
 	/**
 	 * A class used for querying ArcGIS Open Data.
@@ -78,7 +80,7 @@
 			datasetsRequest.onloadend = function () {
 				var datasetsResponse;
 				if (this.status === 200) {
-					datasetsResponse = JSON.parse(this.response, OpenData.reviver);
+					datasetsResponse = JSON.parse(this.response, OpenDataObjects.reviver);
 					resolve(datasetsResponse);
 				} else {
 					reject(this.response);
@@ -137,19 +139,19 @@
 		return promise;
 	};
 
-	/**
-	 * Function used for JSON deserialization.
-	 * @param {string} k
-	 * @param {*} v
-	 */
-	OpenData.reviver = function (k, v) {
-		var datePropertyRe = /(?:(?:updated)|(?:created))_at/;
-		if (datePropertyRe.test(k) && typeof v === "string") {
-			return new Date(v);
-		} else {
-			return v;
-		}
+
+
+	var QueryParameters = function (json) {
+		this.bbox = json.bbox || null;
+		this.page = json.page || null;
+		this.per_page = json.per_page || null;
+		this.q = json.q || null;
+		this.required_keywords = json.required_keywords || null;
+		this.sort_by = json.sort_by || null;
+		this.sort_order = json.sort_order || null;
 	};
+
+	OpenData.QueryParameters = QueryParameters;
 
 	// Just return a value to define the module export.
 	// This example returns an object, but the module
